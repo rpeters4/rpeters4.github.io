@@ -24,25 +24,24 @@ npm run preview
 
 Follow these steps to publish the site at `https://rpeters4.github.io`:
 
-1. **Create the repository.** On GitHub, create a new **public** repository named exactly `rpeters4.github.io`.
-
-2. **Push this project.** Initialize git in this directory, add the remote, and push to `main`:
+1. **Build the site.** Ensure your latest static files are compiled into the `/docs` folder:
    ```bash
-   git init
-   git add .
-   git commit -m "Initial portfolio site"
-   git remote add origin https://github.com/rpeters4/rpeters4.github.io.git
-   git branch -M main
-   git push -u origin main
+   npm run build
    ```
 
-3. **Configure Pages.** In the repository on GitHub, go to **Settings > Pages** and set the build and deployment source to **"GitHub Actions"**.
+2. **Push the build.** Commit your changes (including the updated `/docs` folder) and push to GitHub:
+   ```bash
+   git add .
+   git commit -m "Build portfolio and update static files"
+   git push origin main
+   ```
 
-4. **Trigger the deploy.** Push to `main` (or go to the **Actions** tab and trigger the workflow manually). The Actions run builds the site and deploys it.
+3. **Configure Pages.** In your repository settings on GitHub, go to **Settings > Pages**.
+   * Under **Build and deployment > Source**, select **"Deploy from a branch"**.
+   * Under **Branch**, select `main` and change the folder from `/ (root)` to `/docs`.
+   * Click **Save**.
 
-5. **Visit the site.** Go to `https://rpeters4.github.io`. It may take a couple of minutes after the first successful deploy to go live. HTTPS is automatic on `github.io`.
-
-That is the entire setup. No DNS, no custom domain, no CNAME file needed.
+4. **Visit the site.** Go to `https://rpeters4.github.io`. It may take a couple of minutes to go live. HTTPS is automatic on `github.io`.
 
 ## Features
 
@@ -52,11 +51,10 @@ That is the entire setup. No DNS, no custom domain, no CNAME file needed.
 - Interactive pipeline parallelism visualization (naive vs. 1F1B scheduling)
 - Copy-to-clipboard on email addresses
 - Fully responsive, accessible, and respects prefers-reduced-motion
-- Zero-cost hosting on GitHub Pages via GitHub Actions
+- Zero-cost hosting on GitHub Pages via static branch deployment
 
 ## Tech Stack
 
 - **Astro** (static site generation with islands architecture)
 - **TypeScript** (strict mode)
 - **Tailwind CSS v4** (via @tailwindcss/vite)
-- **GitHub Actions** (CI/CD)
