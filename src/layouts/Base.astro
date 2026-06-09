@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 interface Props {
   title?: string;
   description?: string;
@@ -47,10 +49,7 @@ const {
       })();
     </script>
 
-    <!-- Global styles (includes Tailwind + fonts import) -->
-    <style>
-      @import '../styles/global.css';
-    </style>
+
   </head>
   <body class="min-h-screen bg-[var(--color-surface-primary)] text-[var(--color-text-primary)] antialiased">
     <a href="#main-content" class="skip-link">Skip to main content</a>
