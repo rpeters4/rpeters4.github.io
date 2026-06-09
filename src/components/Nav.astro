@@ -1,0 +1,135 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+
+const navLinks = [
+  { href: '#about', label: 'About' },
+  { href: '#research', label: 'Research' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header
+  id="site-nav"
+  class="fixed top-0 left-0 right-0 z-50 border-b border-[var(--color-border)] bg-[var(--color-surface-primary)]/80 backdrop-blur-lg transition-colors duration-300"
+>
+  <nav class="section-container flex items-center justify-between h-16" aria-label="Main navigation">
+    <!-- Logo / Name -->
+    <a href="#hero" class="font-mono text-sm font-semibold tracking-wider text-[var(--color-text-primary)] hover:text-[var(--color-accent-500)] transition-colors">
+      RP
+    </a>
+
+    <!-- Desktop nav links -->
+    <div class="hidden md:flex items-center gap-1">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class="nav-link px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] rounded-lg hover:bg-[var(--color-surface-secondary)] transition-all duration-200"
+          data-nav-link
+        >
+          {link.label}
+        </a>
+      ))}
+      <div class="ml-3 pl-3 border-l border-[var(--color-border)]">
+        <ThemeToggle />
+      </div>
+    </div>
+
+    <!-- Mobile menu button -->
+    <div class="flex items-center gap-2 md:hidden">
+      <ThemeToggle />
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        class="flex items-center justify-center w-10 h-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-card)] hover:border-[var(--color-border-hover)] transition-all cursor-pointer"
+      >
+        <svg id="menu-icon-open" class="w-5 h-5 text-[var(--color-text-secondary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg id="menu-icon-close" class="w-5 h-5 text-[var(--color-text-secondary)] hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden border-t border-[var(--color-border)] bg-[var(--color-surface-primary)]/95 backdrop-blur-lg"
+  >
+    <div class="section-container py-4 flex flex-col gap-1">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class="mobile-nav-link px-4 py-3 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] rounded-lg hover:bg-[var(--color-surface-secondary)] transition-all duration-200"
+          data-nav-link
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<!-- Spacer for fixed nav -->
+<div class="h-16"></div>
+
+<script>
+  function initNav() {
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('menu-icon-open');
+    const iconClose = document.getElementById('menu-icon-close');
+
+    menuBtn?.addEventListener('click', () => {
+      const isOpen = mobileMenu?.classList.toggle('hidden') === false;
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+      iconOpen?.classList.toggle('hidden', isOpen);
+      iconClose?.classList.toggle('hidden', !isOpen);
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu?.classList.add('hidden');
+        menuBtn?.setAttribute('aria-expanded', 'false');
+        iconOpen?.classList.remove('hidden');
+        iconClose?.classList.add('hidden');
+      });
+    });
+
+    // Scroll-spy: highlight active section
+    const navLinks = document.querySelectorAll('[data-nav-link]');
+    const sections = document.querySelectorAll('section[id]');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              const href = link.getAttribute('href');
+              const isActive = href === `#${id}`;
+              link.classList.toggle('text-[var(--color-accent-500)]', isActive);
+              link.classList.toggle('text-[var(--color-text-secondary)]', !isActive);
+            });
+          }
+        });
+      },
+      {
+        rootMargin: '-20% 0px -75% 0px',
+        threshold: 0,
+      }
+    );
+
+    sections.forEach(section => observer.observe(section));
+  }
+
+  initNav();
+  document.addEventListener('astro:after-swap', initNav);
+</script>

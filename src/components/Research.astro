@@ -1,0 +1,65 @@
+---
+// Research section - the five "realms"
+const realms = [
+  {
+    title: 'Formal Methods for Distributed Training',
+    description: 'Specifying pipeline parallelism (GPipe, 1F1B, zero-bubble), ZeRO sharding, tensor parallelism, and ring all-reduce in TLA+, with model checking and refinement mappings. The aim is to find scheduling slack, redundant synchronization, and refinement opportunities that have not been published.',
+    icon: '⊢',
+  },
+  {
+    title: 'Specification as Discovery',
+    description: 'A methodology built on four mechanisms: refinement-based design (deriving optimized variants from abstract correctness specs), action decomposition (splitting "atomic" actions to expose scheduling freedom), specification weakening (showing that some transformations thought unsafe are actually safe), and counterexample-guided reduction of over-cautious synchronization.',
+    icon: '∇',
+  },
+  {
+    title: 'Formal Verification',
+    description: 'Model checking, safety and liveness properties, refinement mappings, and the TLA+ toolchain. Grounded in the industrial precedent for TLA+ at scale.',
+    icon: '✓',
+  },
+  {
+    title: 'Distributed Systems & ML Internals',
+    description: 'Collective communication algorithms, pipeline and tensor parallelism scheduling, and sharding protocols (FSDP, ZeRO).',
+    icon: '⇄',
+  },
+  {
+    title: 'Adjacent Interests',
+    description: 'Optimizer convergence formalization in Lean (the open Adam convergence question), verified tensor compilers (TASO, PET, Exo) as precedent for verification-driven optimization, and OCaml.',
+    icon: '∞',
+  },
+];
+---
+
+<section id="research" class="py-20 md:py-28 border-t border-[var(--color-border)]">
+  <div class="section-container">
+    <p class="section-label">Research</p>
+    <h2 class="section-heading">Focus Areas</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {realms.map((realm, i) => (
+        <div
+          class="card group"
+          style={`animation: fade-in-up 0.6s ease-out ${0.1 + i * 0.1}s both;`}
+        >
+          <div class="flex items-start gap-4">
+            <span class="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg bg-[var(--color-accent-500)]/10 text-[var(--color-accent-500)] font-mono text-lg" aria-hidden="true">
+              {realm.icon}
+            </span>
+            <div>
+              <h3 class="font-mono text-sm font-semibold tracking-wide text-[var(--color-text-primary)] mb-2">
+                {realm.title}
+              </h3>
+              <p class="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                {realm.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Research visualization slot -->
+    <div class="mt-12">
+      <slot />
+    </div>
+  </div>
+</section>

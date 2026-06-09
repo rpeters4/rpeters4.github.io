@@ -1,0 +1,71 @@
+---
+// Skills section - grouped clusters
+const clusters = [
+  {
+    heading: 'Formal Methods & Verification',
+    items: [
+      'TLA+ and model checking',
+      'Temporal logic and the mu-calculus, including least and greatest fixed points for expressing safety, liveness, and fairness',
+      'Hennessy-Milner Logic and strong and weak bisimulation for proving process equivalence',
+      'Process algebra (CCS and CSP style calculi)',
+      'Operational semantics, natural deduction, and inference-rule proof systems',
+    ],
+  },
+  {
+    heading: 'Programming Languages & Compilers',
+    items: [
+      'Designed and built a complete multi-pass nanopass compiler that lowers a Scheme subset to LLVM IR and native code, with each stage as a distinct pass: desugaring, assignment conversion, alpha-renaming, A-normal form, continuation-passing style, closure conversion, and LLVM emission',
+      'Wrote meta-circular and CEK-machine interpreters',
+      'Fluent in lambda calculus: Church encoding, fixed-point combinators, and reduction strategies',
+    ],
+  },
+  {
+    heading: 'Mathematical Foundations',
+    items: [
+      'Discrete mathematics: set theory, propositional and predicate logic, relations and functions, combinatorics, and proof techniques (direct proof, contradiction, contrapositive, and induction)',
+      'Graph algorithms including a from-scratch PageRank with iterative convergence',
+    ],
+  },
+  {
+    heading: 'Languages & Tools',
+    items: [
+      'Racket and Scheme (advanced, full compiler and interpreter implementations)',
+      'LLVM IR (code generation, register allocation, tail calls)',
+      'C and C++ (runtime systems, LLVM interop)',
+      'Python',
+      'OCaml (in progress)',
+      'TLA+',
+      'Docker',
+      'Git',
+    ],
+  },
+];
+---
+
+<section id="skills" class="py-20 md:py-28 border-t border-[var(--color-border)]">
+  <div class="section-container">
+    <p class="section-label">Skills</p>
+    <h2 class="section-heading">What I Work With</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {clusters.map((cluster, i) => (
+        <div
+          class="card"
+          style={`animation: fade-in-up 0.6s ease-out ${0.1 + i * 0.1}s both;`}
+        >
+          <h3 class="font-mono text-xs font-semibold tracking-widest uppercase text-[var(--color-accent-500)] mb-4">
+            {cluster.heading}
+          </h3>
+          <ul class="space-y-2.5">
+            {cluster.items.map(item => (
+              <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                <span class="flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--color-border-hover)]" aria-hidden="true"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
