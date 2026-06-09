@@ -1,71 +1,126 @@
 ---
-// Skills section - grouped clusters
-const clusters = [
-  {
-    heading: 'Formal Methods & Verification',
-    items: [
-      'TLA+ and model checking',
-      'Temporal logic and the mu-calculus, including least and greatest fixed points for expressing safety, liveness, and fairness',
-      'Hennessy-Milner Logic and strong and weak bisimulation for proving process equivalence',
-      'Process algebra (CCS and CSP style calculi)',
-      'Operational semantics, natural deduction, and inference-rule proof systems',
-    ],
-  },
-  {
-    heading: 'Programming Languages & Compilers',
-    items: [
-      'Designed and built a complete multi-pass nanopass compiler that lowers a Scheme subset to LLVM IR and native code, with each stage as a distinct pass: desugaring, assignment conversion, alpha-renaming, A-normal form, continuation-passing style, closure conversion, and LLVM emission',
-      'Wrote meta-circular and CEK-machine interpreters',
-      'Fluent in lambda calculus: Church encoding, fixed-point combinators, and reduction strategies',
-    ],
-  },
-  {
-    heading: 'Mathematical Foundations',
-    items: [
-      'Discrete mathematics: set theory, propositional and predicate logic, relations and functions, combinatorics, and proof techniques (direct proof, contradiction, contrapositive, and induction)',
-      'Graph algorithms including a from-scratch PageRank with iterative convergence',
-    ],
-  },
-  {
-    heading: 'Languages & Tools',
-    items: [
-      'Racket and Scheme (advanced, full compiler and interpreter implementations)',
-      'LLVM IR (code generation, register allocation, tail calls)',
-      'C and C++ (runtime systems, LLVM interop)',
-      'Python',
-      'OCaml (in progress)',
-      'TLA+',
-      'Docker',
-      'Git',
-    ],
-  },
+// Skills section - redesigned grouped clusters with modern pills and layouts
+const verificationItems = [
+  { text: 'TLA+ and model checking', highlights: ['TLA+'] },
+  { text: 'Temporal logic and the mu-calculus, including least and greatest fixed points for safety, liveness, and fairness properties', highlights: ['Temporal logic', 'mu-calculus', 'safety', 'liveness'] },
+  { text: 'Hennessy-Milner Logic and strong/weak bisimulation for proving process equivalence', highlights: ['Hennessy-Milner Logic', 'bisimulation'] },
+  { text: 'Process algebra (CCS and CSP style calculi)', highlights: ['CCS', 'CSP'] },
+  { text: 'Operational semantics, natural deduction, and inference-rule proof systems', highlights: ['Operational semantics'] },
+];
+
+const compilerItems = [
+  { text: 'Designed and built a complete multi-pass nanopass compiler that lowers a Scheme subset to LLVM IR and native code, with stages including desugaring, ANF, CPS, closure conversion, and LLVM emission', highlights: ['nanopass compiler', 'Scheme', 'LLVM IR', 'ANF', 'CPS', 'closure conversion'] },
+  { text: 'Wrote meta-circular and CEK-machine interpreters', highlights: ['CEK-machine'] },
+  { text: 'Fluent in lambda calculus: Church encoding, fixed-point combinators, and reduction strategies', highlights: ['lambda calculus'] },
+];
+
+const mathItems = [
+  { text: 'Discrete mathematics: set theory, propositional/predicate logic, relations, functions, combinatorics, and proof systems (induction, contradiction)', highlights: ['Discrete mathematics', 'logic', 'proof systems'] },
+  { text: 'Graph algorithms including a from-scratch PageRank with iterative convergence', highlights: ['PageRank'] },
+];
+
+const languages = [
+  'Racket & Scheme', 'LLVM IR', 'C & C++', 'Python', 'OCaml', 'TLA+', 'Docker', 'Git'
 ];
 ---
 
-<section id="skills" class="py-20 md:py-28 border-t border-[var(--color-border)]">
-  <div class="section-container">
-    <p class="section-label">Skills</p>
-    <h2 class="section-heading">What I Work With</h2>
+<section id="skills" class="py-24 md:py-32 border-t border-[var(--color-border)] relative">
+  <!-- Soft background decoration -->
+  <div class="absolute bottom-1/4 right-0 w-80 h-80 rounded-full blur-[120px] opacity-[0.02] dark:opacity-[0.04] glow-blob-2 pointer-events-none" aria-hidden="true"></div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      {clusters.map((cluster, i) => (
-        <div
-          class="card"
-          style={`animation: fade-in-up 0.6s ease-out ${0.1 + i * 0.1}s both;`}
-        >
-          <h3 class="font-mono text-xs font-semibold tracking-widest uppercase text-[var(--color-accent-500)] mb-4">
-            {cluster.heading}
+  <div class="section-container relative z-10">
+    <p class="section-label">Skills</p>
+    <h2 class="section-heading">Academic & Practical Expertise</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      <!-- Cluster 1: Formal Verification -->
+      <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.1s both;">
+        <div>
+          <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
+            Formal Methods & Verification
           </h3>
-          <ul class="space-y-2.5">
-            {cluster.items.map(item => (
-              <li class="flex items-start gap-2 text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                <span class="flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-[var(--color-border-hover)]" aria-hidden="true"></span>
-                <span>{item}</span>
+          <ul class="space-y-4">
+            {verificationItems.map(item => (
+              <li class="text-sm text-[var(--color-text-secondary)] leading-relaxed flex items-start gap-3">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]/40 flex-shrink-0"></span>
+                <span class="text-xs md:text-sm">
+                  {item.text.split(new RegExp(`(${item.highlights.join('|')})`, 'g')).map(part => 
+                    item.highlights.includes(part) ? <span class="font-mono text-[11px] px-1.5 py-0.5 rounded border border-[var(--color-border)] bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] font-semibold">{part}</span> : part
+                  )}
+                </span>
               </li>
             ))}
           </ul>
         </div>
-      ))}
+      </div>
+
+      <!-- Cluster 2: Compilers -->
+      <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.2s both;">
+        <div>
+          <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
+            Programming Languages & Compilers
+          </h3>
+          <ul class="space-y-4">
+            {compilerItems.map(item => (
+              <li class="text-sm text-[var(--color-text-secondary)] leading-relaxed flex items-start gap-3">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]/40 flex-shrink-0"></span>
+                <span class="text-xs md:text-sm">
+                  {item.text.split(new RegExp(`(${item.highlights.join('|')})`, 'g')).map(part => 
+                    item.highlights.includes(part) ? <span class="font-mono text-[11px] px-1.5 py-0.5 rounded border border-[var(--color-border)] bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] font-semibold">{part}</span> : part
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cluster 3: Mathematics -->
+      <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.3s both;">
+        <div>
+          <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
+            Mathematical Foundations
+          </h3>
+          <ul class="space-y-4">
+            {mathItems.map(item => (
+              <li class="text-sm text-[var(--color-text-secondary)] leading-relaxed flex items-start gap-3">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]/40 flex-shrink-0"></span>
+                <span class="text-xs md:text-sm">
+                  {item.text.split(new RegExp(`(${item.highlights.join('|')})`, 'g')).map(part => 
+                    item.highlights.includes(part) ? <span class="font-mono text-[11px] px-1.5 py-0.5 rounded border border-[var(--color-border)] bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] font-semibold">{part}</span> : part
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Cluster 4: Languages & Tools -->
+      <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.4s both;">
+        <div>
+          <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
+            Languages & Tools
+          </h3>
+          <p class="text-xs text-[var(--color-text-tertiary)] mb-5 leading-relaxed">
+            Technologies and frameworks utilized across academic compiler construction, verification setups, and operational tasks.
+          </p>
+          <div class="flex flex-wrap gap-2.5">
+            {languages.map(lang => (
+              <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-secondary)]/50 text-xs font-mono font-bold text-[var(--color-text-primary)] hover:border-[var(--color-accent-500)] hover:bg-[var(--color-surface-card)] hover:shadow-sm hover:scale-[1.03] transition-all duration-200 cursor-default">
+                <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
+                {lang}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>

@@ -1,13 +1,13 @@
 ---
-// About section - the throughline narrative
+// About section - the throughline narrative with polished tags
 ---
 
-<section id="about" class="py-20 md:py-28 border-t border-[var(--color-border)]">
+<section id="about" class="py-24 md:py-32 border-t border-[var(--color-border)] relative">
   <div class="section-container">
     <p class="section-label">About</p>
     <h2 class="section-heading">Background</h2>
 
-    <div class="prose-column space-y-6 text-[var(--color-text-secondary)] leading-relaxed">
+    <div class="prose-column space-y-6 text-[var(--color-text-secondary)] leading-relaxed text-base md:text-lg">
       <p>
         Ryan is an incoming Master's student in Computer Science at Syracuse University, starting Fall 2026, alongside several years of experience running help desk operations and supervising student technology consultants at Syracuse University ITS. His academic focus is formal verification applied to modern ML systems infrastructure, an area where formal methods have barely been applied. His thesis advisor target is Prof. Endadul Hoque.
       </p>
@@ -17,15 +17,18 @@
       </p>
 
       <p>
-        This research builds directly on his formal-methods coursework. Temporal logic and the mu-calculus, the logics he studied for reasoning about concurrent systems, express exactly the safety and liveness properties his TLA+ specifications target, so the thesis is a continuation of that foundation rather than a departure from it.
+        This research builds directly on his formal-methods coursework. <span class="tech-tag">Temporal logic</span> and the <span class="tech-tag">mu-calculus</span>, the logics he studied for reasoning about concurrent systems, express exactly the <span class="tech-tag">safety & liveness</span> properties his <span class="tech-tag">TLA+</span> specifications target, so the thesis is a continuation of that foundation rather than a departure from it.
       </p>
     </div>
 
-    <!-- Professional line -->
-    <div class="mt-10 inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-card)]">
-      <span class="flex-shrink-0 w-2 h-2 rounded-full bg-emerald-500"></span>
+    <!-- Redesigned Professional line container -->
+    <div class="mt-12 inline-flex items-center gap-3.5 px-5 py-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-card)] shadow-sm hover:shadow transition-shadow duration-300">
+      <span class="relative flex h-2.5 w-2.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+      </span>
       <span class="text-sm text-[var(--color-text-secondary)]">
-        <span class="font-medium text-[var(--color-text-primary)]">Support Analyst II</span>, Syracuse University ITS
+        Currently serving as <span class="font-bold text-[var(--color-text-primary)]">Support Analyst II</span> at Syracuse University ITS
       </span>
     </div>
   </div>

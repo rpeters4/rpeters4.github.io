@@ -3,21 +3,24 @@
 // Shows naive vs 1F1B scheduling to illustrate how formal analysis reveals idle gaps
 ---
 
-<div class="card overflow-hidden" id="research-viz">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+<div class="card overflow-hidden relative border-[var(--color-border)] shadow-md" id="research-viz">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
     <div>
-      <h3 class="font-mono text-sm font-semibold tracking-wide text-[var(--color-text-primary)] mb-1">
+      <h3 class="font-mono text-sm font-bold tracking-wide text-[var(--color-text-primary)] mb-1.5 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[var(--color-accent-500)]"></span>
         Pipeline Parallelism Scheduling
       </h3>
-      <p class="text-xs text-[var(--color-text-tertiary)]">
+      <p class="text-xs text-[var(--color-text-tertiary)] max-w-md">
         Visualizing how formal analysis exposes idle time (bubbles) in pipeline schedules.
       </p>
     </div>
-    <div class="flex items-center gap-1 p-1 rounded-lg bg-[var(--color-surface-secondary)] border border-[var(--color-border)]">
+    
+    <!-- Redesigned Capsule Selector Toggle -->
+    <div class="flex items-center gap-1 p-1.5 rounded-full bg-[var(--color-surface-secondary)] border border-[var(--color-border)] self-start sm:self-auto">
       <button
         id="viz-btn-naive"
         type="button"
-        class="viz-toggle-btn px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-all cursor-pointer bg-[var(--color-accent-500)] text-white"
+        class="viz-toggle-btn px-4.5 py-1.5 rounded-full text-xs font-mono font-bold transition-all cursor-pointer bg-[var(--color-accent-500)] text-white shadow"
         aria-pressed="true"
       >
         Naive
@@ -25,7 +28,7 @@
       <button
         id="viz-btn-1f1b"
         type="button"
-        class="viz-toggle-btn px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-all cursor-pointer text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+        class="viz-toggle-btn px-4.5 py-1.5 rounded-full text-xs font-mono font-bold transition-all cursor-pointer text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
         aria-pressed="false"
       >
         1F1B
@@ -35,23 +38,38 @@
 
   <!-- SVG Pipeline Visualization -->
   <div class="w-full overflow-x-auto -mx-1 px-1">
-    <svg id="pipeline-svg" viewBox="0 0 800 260" class="w-full min-w-[600px]" role="img" aria-label="Pipeline parallelism schedule visualization showing micro-batch execution across pipeline stages over time">
+    <svg id="pipeline-svg" viewBox="0 0 800 260" class="w-full min-w-[600px] select-none" role="img" aria-label="Pipeline parallelism schedule visualization showing micro-batch execution across pipeline stages over time">
+      <!-- Gradient definitions for SVG blocks -->
+      <defs>
+        <linearGradient id="fwd-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="oklch(0.68 0.16 260)" />
+          <stop offset="100%" stop-color="oklch(0.55 0.20 270)" />
+        </linearGradient>
+        <linearGradient id="bwd-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="oklch(0.70 0.14 150)" />
+          <stop offset="100%" stop-color="oklch(0.58 0.16 160)" />
+        </linearGradient>
+        <pattern id="bubble-pattern" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="8" stroke="var(--color-border-hover)" stroke-width="1.5" />
+        </pattern>
+      </defs>
+
       <!-- Y-axis labels (stages) -->
-      <text x="45" y="65" text-anchor="end" class="fill-[var(--color-text-tertiary)]" font-family="var(--font-mono)" font-size="11">Stage 0</text>
-      <text x="45" y="115" text-anchor="end" class="fill-[var(--color-text-tertiary)]" font-family="var(--font-mono)" font-size="11">Stage 1</text>
-      <text x="45" y="165" text-anchor="end" class="fill-[var(--color-text-tertiary)]" font-family="var(--font-mono)" font-size="11">Stage 2</text>
-      <text x="45" y="215" text-anchor="end" class="fill-[var(--color-text-tertiary)]" font-family="var(--font-mono)" font-size="11">Stage 3</text>
+      <text x="45" y="65" text-anchor="end" class="fill-[var(--color-text-tertiary)] font-semibold" font-family="var(--font-mono)" font-size="10">Stage 0</text>
+      <text x="45" y="115" text-anchor="end" class="fill-[var(--color-text-tertiary)] font-semibold" font-family="var(--font-mono)" font-size="10">Stage 1</text>
+      <text x="45" y="165" text-anchor="end" class="fill-[var(--color-text-tertiary)] font-semibold" font-family="var(--font-mono)" font-size="10">Stage 2</text>
+      <text x="45" y="215" text-anchor="end" class="fill-[var(--color-text-tertiary)] font-semibold" font-family="var(--font-mono)" font-size="10">Stage 3</text>
 
       <!-- X-axis label -->
-      <text x="430" y="250" text-anchor="middle" class="fill-[var(--color-text-tertiary)]" font-family="var(--font-mono)" font-size="10">Time →</text>
+      <text x="430" y="250" text-anchor="middle" class="fill-[var(--color-text-tertiary)] font-semibold" font-family="var(--font-mono)" font-size="9">Time →</text>
 
       <!-- Grid lines -->
-      <line x1="55" y1="45" x2="55" y2="230" stroke="var(--color-border)" stroke-width="1" />
+      <line x1="55" y1="45" x2="55" y2="230" stroke="var(--color-border)" stroke-width="1.5" />
       <line x1="55" y1="45" x2="790" y2="45" stroke="var(--color-border)" stroke-width="0.5" stroke-dasharray="4,4" />
       <line x1="55" y1="95" x2="790" y2="95" stroke="var(--color-border)" stroke-width="0.5" stroke-dasharray="4,4" />
       <line x1="55" y1="145" x2="790" y2="145" stroke="var(--color-border)" stroke-width="0.5" stroke-dasharray="4,4" />
       <line x1="55" y1="195" x2="790" y2="195" stroke="var(--color-border)" stroke-width="0.5" stroke-dasharray="4,4" />
-      <line x1="55" y1="230" x2="790" y2="230" stroke="var(--color-border)" stroke-width="1" />
+      <line x1="55" y1="230" x2="790" y2="230" stroke="var(--color-border)" stroke-width="1.5" />
 
       <!-- Blocks container -->
       <g id="pipeline-blocks"></g>
@@ -59,20 +77,23 @@
   </div>
 
   <!-- Legend -->
-  <div class="flex flex-wrap items-center gap-4 mt-4 pt-4 border-t border-[var(--color-border)]">
-    <div class="flex items-center gap-1.5">
-      <span class="w-3 h-3 rounded-sm" style="background-color: oklch(0.70 0.15 265);"></span>
-      <span class="text-xs text-[var(--color-text-tertiary)] font-mono">Forward</span>
+  <div class="flex flex-wrap items-center gap-5 mt-6 pt-5 border-t border-[var(--color-border)]">
+    <div class="flex items-center gap-2">
+      <span class="w-3.5 h-3.5 rounded-md shadow-sm" style="background: url(#fwd-grad) oklch(0.60 0.18 265);"></span>
+      <span class="text-xs text-[var(--color-text-secondary)] font-mono font-medium">Forward</span>
     </div>
-    <div class="flex items-center gap-1.5">
-      <span class="w-3 h-3 rounded-sm" style="background-color: oklch(0.65 0.15 155);"></span>
-      <span class="text-xs text-[var(--color-text-tertiary)] font-mono">Backward</span>
+    <div class="flex items-center gap-2">
+      <span class="w-3.5 h-3.5 rounded-md shadow-sm" style="background: url(#bwd-grad) oklch(0.65 0.15 155);"></span>
+      <span class="text-xs text-[var(--color-text-secondary)] font-mono font-medium">Backward</span>
     </div>
-    <div class="flex items-center gap-1.5">
-      <span class="w-3 h-3 rounded-sm border border-dashed border-[var(--color-border)]" style="background: repeating-linear-gradient(45deg, transparent, transparent 2px, var(--color-border) 2px, var(--color-border) 4px);"></span>
-      <span class="text-xs text-[var(--color-text-tertiary)] font-mono">Bubble (idle)</span>
+    <div class="flex items-center gap-2">
+      <span class="w-3.5 h-3.5 rounded-md border border-dashed border-[var(--color-border-hover)]" style="background: url(#bubble-pattern) var(--color-surface-secondary);"></span>
+      <span class="text-xs text-[var(--color-text-secondary)] font-mono font-medium">Bubble (idle gap)</span>
     </div>
-    <span id="viz-efficiency" class="ml-auto text-xs font-mono text-[var(--color-text-tertiary)]"></span>
+    <div class="ml-auto flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span id="viz-efficiency" class="text-xs font-mono font-bold text-[var(--color-text-primary)]"></span>
+    </div>
   </div>
 </div>
 
@@ -93,10 +114,10 @@
   const Y_OFFSET = 45;
   const STAGE_GAP = 50;
 
-  // Colors
-  const FWD_COLOR = 'oklch(0.70 0.15 265)';
-  const BWD_COLOR = 'oklch(0.65 0.15 155)';
-  const BUBBLE_PATTERN = 'url(#bubble-pattern)';
+  // Colors mapping
+  const FWD_COLOR = 'url(#fwd-grad)';
+  const BWD_COLOR = 'url(#bwd-grad)';
+  const BUBBLE_COLOR = 'url(#bubble-pattern)';
 
   // Naive schedule: all forwards first, then all backwards
   function naiveSchedule(): Block[] {
@@ -157,51 +178,13 @@
   function oneFOneBSchedule(): Block[] {
     const blocks: Block[] = [];
 
-    // Warmup: forward passes fill the pipeline
-    for (let mb = 0; mb < STAGES; mb++) {
-      for (let s = 0; s <= mb; s++) {
-        blocks.push({
-          stage: s,
-          start: (mb + s) * BLOCK_W - s * BLOCK_W + s * BLOCK_W,
-          duration: BLOCK_W,
-          type: 'forward',
-          label: `F${mb}`,
-        });
-      }
-    }
-
-    // Correct positioning: warmup forwards cascade
-    blocks.length = 0;
-
-    // Stage 0 gets one F at a time, alternating F and B after warmup
-    // Warmup phase: send STAGES forward passes
-    for (let s = 0; s < STAGES; s++) {
-      for (let mb = 0; mb < MICROBATCHES; mb++) {
-        // In 1F1B, each stage processes fwd then bwd in a pipelined fashion
-        // This is simplified for visualization
-      }
-    }
-
-    // Simplified 1F1B visualization
-    // Warmup: stages fill up with forward passes
-    const schedule: { stage: number; slot: number; type: 'forward' | 'backward'; mb: number }[] = [];
-
-    // Stage 0: F0 F1 F2 F3 B0 B1 B2 B3
-    // Stage 1: __ F0 F1 F2 F3 B0 B1 B2 B3
-    // Stage 2: __ __ F0 F1 F2 B3 F3 B0 B1 B2
-    // Stage 3: __ __ __ F0 B0 F1 B1 F2 B2 F3 B3
-
-    // More accurate 1F1B:
-    // After warmup (S forward passes), each stage alternates 1 fwd, 1 bwd
     // Stage 0 timeline:
     const s0: Block[] = [];
     let t = 0;
-    // Warmup: send all 4 forwards
     for (let mb = 0; mb < MICROBATCHES; mb++) {
       s0.push({ stage: 0, start: t, duration: BLOCK_W, type: 'forward', label: `F${mb}` });
       t += BLOCK_W;
     }
-    // Steady: alternate backward passes  
     for (let mb = 0; mb < MICROBATCHES; mb++) {
       s0.push({ stage: 0, start: t, duration: BLOCK_W, type: 'backward', label: `B${mb}` });
       t += BLOCK_W;
@@ -214,7 +197,6 @@
       s1.push({ stage: 1, start: t, duration: BLOCK_W, type: 'forward', label: `F${mb}` });
       t += BLOCK_W;
     }
-    // Steady state: 1F1B
     s1.push({ stage: 1, start: t, duration: BLOCK_W, type: 'forward', label: 'F3' }); t += BLOCK_W;
     s1.push({ stage: 1, start: t, duration: BLOCK_W, type: 'backward', label: 'B0' }); t += BLOCK_W;
     s1.push({ stage: 1, start: t, duration: BLOCK_W, type: 'backward', label: 'B1' }); t += BLOCK_W;
@@ -226,12 +208,10 @@
     t = 2 * BLOCK_W;
     s2.push({ stage: 2, start: t, duration: BLOCK_W, type: 'forward', label: 'F0' }); t += BLOCK_W;
     s2.push({ stage: 2, start: t, duration: BLOCK_W, type: 'forward', label: 'F1' }); t += BLOCK_W;
-    // Steady: 1F1B pairs
     s2.push({ stage: 2, start: t, duration: BLOCK_W, type: 'forward', label: 'F2' }); t += BLOCK_W;
     s2.push({ stage: 2, start: t, duration: BLOCK_W, type: 'backward', label: 'B0' }); t += BLOCK_W;
     s2.push({ stage: 2, start: t, duration: BLOCK_W, type: 'forward', label: 'F3' }); t += BLOCK_W;
     s2.push({ stage: 2, start: t, duration: BLOCK_W, type: 'backward', label: 'B1' }); t += BLOCK_W;
-    // Cooldown
     s2.push({ stage: 2, start: t, duration: BLOCK_W, type: 'backward', label: 'B2' }); t += BLOCK_W;
     s2.push({ stage: 2, start: t, duration: BLOCK_W, type: 'backward', label: 'B3' }); t += BLOCK_W;
 
@@ -239,7 +219,6 @@
     const s3: Block[] = [];
     t = 3 * BLOCK_W;
     s3.push({ stage: 3, start: t, duration: BLOCK_W, type: 'forward', label: 'F0' }); t += BLOCK_W;
-    // Steady: 1F1B 
     s3.push({ stage: 3, start: t, duration: BLOCK_W, type: 'backward', label: 'B0' }); t += BLOCK_W;
     s3.push({ stage: 3, start: t, duration: BLOCK_W, type: 'forward', label: 'F1' }); t += BLOCK_W;
     s3.push({ stage: 3, start: t, duration: BLOCK_W, type: 'backward', label: 'B1' }); t += BLOCK_W;
@@ -266,20 +245,6 @@
     const svg = document.getElementById('pipeline-svg');
     if (!container || !svg) return;
 
-    // Ensure bubble pattern exists
-    let defs = svg.querySelector('defs');
-    if (!defs) {
-      defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-      svg.prepend(defs);
-    }
-    if (!defs.querySelector('#bubble-pattern')) {
-      defs.innerHTML = `
-        <pattern id="bubble-pattern" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
-          <line x1="0" y1="0" x2="0" y2="6" stroke="var(--color-border)" stroke-width="1.5" />
-        </pattern>
-      `;
-    }
-
     container.innerHTML = '';
 
     // Calculate viewBox width based on blocks
@@ -300,24 +265,31 @@
       rect.setAttribute('y', String(y));
       rect.setAttribute('width', String(block.duration - 2));
       rect.setAttribute('height', String(BLOCK_H));
-      rect.setAttribute('rx', '4');
+      rect.setAttribute('rx', '5'); // Smoother corners
 
       if (block.type === 'forward') {
         rect.setAttribute('fill', FWD_COLOR);
       } else if (block.type === 'backward') {
         rect.setAttribute('fill', BWD_COLOR);
       } else {
-        rect.setAttribute('fill', 'url(#bubble-pattern)');
+        rect.setAttribute('fill', BUBBLE_COLOR);
         rect.setAttribute('stroke', 'var(--color-border)');
         rect.setAttribute('stroke-width', '1');
-        rect.setAttribute('stroke-dasharray', '4,2');
+        rect.setAttribute('stroke-dasharray', '3,2');
       }
 
       if (animate && !reducedMotion) {
         rect.style.opacity = '0';
-        rect.style.transition = `opacity 0.3s ease ${i * 0.02}s`;
+        rect.style.transform = 'scale(0.95)';
+        rect.style.transformOrigin = `${x + block.duration / 2}px ${y + BLOCK_H / 2}px`;
+        rect.style.transition = 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+        rect.style.transitionDelay = `${i * 0.015}s`;
+        
         requestAnimationFrame(() => {
-          rect.style.opacity = '1';
+          setTimeout(() => {
+            rect.style.opacity = '1';
+            rect.style.transform = 'scale(1)';
+          }, 20);
         });
       }
 
@@ -330,16 +302,21 @@
         text.setAttribute('y', String(y + BLOCK_H / 2 + 4));
         text.setAttribute('text-anchor', 'middle');
         text.setAttribute('font-family', 'var(--font-mono)');
-        text.setAttribute('font-size', '9');
-        text.setAttribute('font-weight', '600');
+        text.setAttribute('font-size', '9.5');
+        text.setAttribute('font-weight', '700');
         text.setAttribute('fill', 'white');
+        // Subtle text drop shadow for clarity
+        text.setAttribute('style', 'text-shadow: 0 1px 2px rgba(0,0,0,0.25);');
         text.textContent = block.label;
 
         if (animate && !reducedMotion) {
           text.style.opacity = '0';
-          text.style.transition = `opacity 0.3s ease ${i * 0.02 + 0.1}s`;
+          text.style.transition = 'opacity 0.3s ease';
+          text.style.transitionDelay = `${i * 0.015 + 0.15}s`;
           requestAnimationFrame(() => {
-            text.style.opacity = '1';
+            setTimeout(() => {
+              text.style.opacity = '1';
+            }, 20);
           });
         }
 
@@ -360,20 +337,18 @@
   function initViz() {
     const naiveBtn = document.getElementById('viz-btn-naive');
     const onefbBtn = document.getElementById('viz-btn-1f1b');
-    let currentMode: 'naive' | '1f1b' = 'naive';
 
     function setMode(mode: 'naive' | '1f1b') {
-      currentMode = mode;
       const blocks = mode === 'naive' ? naiveSchedule() : oneFOneBSchedule();
       renderBlocks(blocks, true);
 
-      // Update button styles
-      const activeClass = 'bg-[var(--color-accent-500)] text-white';
+      // Update button styles to capsule buttons
+      const activeClass = 'bg-[var(--color-accent-500)] text-white shadow-sm';
       const inactiveClass = 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]';
 
       if (naiveBtn && onefbBtn) {
-        naiveBtn.className = `viz-toggle-btn px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-all cursor-pointer ${mode === 'naive' ? activeClass : inactiveClass}`;
-        onefbBtn.className = `viz-toggle-btn px-3 py-1.5 rounded-md text-xs font-mono font-medium transition-all cursor-pointer ${mode === '1f1b' ? activeClass : inactiveClass}`;
+        naiveBtn.className = `viz-toggle-btn px-4.5 py-1.5 rounded-full text-xs font-mono font-bold transition-all cursor-pointer ${mode === 'naive' ? activeClass : inactiveClass}`;
+        onefbBtn.className = `viz-toggle-btn px-4.5 py-1.5 rounded-full text-xs font-mono font-bold transition-all cursor-pointer ${mode === '1f1b' ? activeClass : inactiveClass}`;
         naiveBtn.setAttribute('aria-pressed', String(mode === 'naive'));
         onefbBtn.setAttribute('aria-pressed', String(mode === '1f1b'));
       }
