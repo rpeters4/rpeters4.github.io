@@ -19,22 +19,54 @@ const mathItems = [
   { text: 'Graph algorithms including a from-scratch PageRank with iterative convergence', highlights: ['PageRank'] },
 ];
 
+// New academic and practical skill items
+const algoItems = [
+  { text: 'Asymptotic analysis (Big-O, Big-Omega, and Big-Theta)', highlights: ['Asymptotic analysis', 'Big-O', 'Big-Omega', 'Big-Theta'] },
+  { text: 'Core structures: arrays, linked lists, stacks, queues, trees (binary search trees, AVL, heaps), hash tables, and graphs', highlights: ['Core structures', 'binary search trees', 'AVL', 'heaps', 'hash tables'] },
+  { text: 'Graph algorithms (BFS, DFS, shortest paths, minimum spanning trees, topological sort)', highlights: ['Graph algorithms', 'BFS', 'DFS'] },
+  { text: 'Design paradigms: divide and conquer, greedy, and dynamic programming, with proofs of correctness and efficiency', highlights: ['Design paradigms', 'dynamic programming'] },
+  { text: 'Implemented PageRank from scratch with iterative convergence', highlights: ['PageRank'] },
+];
+
+const mlItems = [
+  { text: 'Sentence and word embeddings with Sentence Transformers (all-MiniLM-L6-v2) and spaCy (en_core_web_lg)', highlights: ['Sentence Transformers', 'spaCy', 'all-MiniLM-L6-v2', 'en_core_web_lg'] },
+  { text: 'Cosine similarity and semantic relatedness scoring, validated against human annotations on the SICK dataset', highlights: ['Cosine similarity', 'SICK dataset'] },
+  { text: 'Data analysis with Pandas and NumPy, regression analysis, and textual entailment classification', highlights: ['Pandas', 'NumPy', 'textual entailment'] },
+];
+
+const sweItems = [
+  { text: 'Object-oriented analysis and design', highlights: ['Object-oriented analysis and design'] },
+  { text: 'UML modeling in Visual Paradigm: class, sequence, and use-case diagrams', highlights: ['UML modeling', 'Visual Paradigm'] },
+  { text: 'Software Requirements Specifications, CRC cards, and requirements engineering', highlights: ['Software Requirements Specifications', 'CRC cards'] },
+  { text: 'Team-based development and collaborative delivery', highlights: ['Team-based development'] },
+];
+
+// Enriched Languages & Tools list
 const languages = [
-  'Racket & Scheme', 'LLVM IR', 'C & C++', 'Python', 'OCaml', 'TLA+', 'Docker', 'Git'
+  'Racket & Scheme', 
+  'LLVM IR', 
+  'C & C++', 
+  'Python (NLP & Data: Pandas, NumPy, matplotlib)', 
+  'OCaml (in progress)', 
+  'TLA+', 
+  'UML & Visual Paradigm', 
+  'Jupyter', 
+  'Docker', 
+  'Git'
 ];
 ---
 
 <section id="skills" class="py-24 md:py-32 border-t border-[var(--color-border)] relative">
-  <!-- Soft background decoration -->
+  <!-- Ambient background glow -->
   <div class="absolute bottom-1/4 right-0 w-80 h-80 rounded-full blur-[120px] opacity-[0.02] dark:opacity-[0.04] glow-blob-2 pointer-events-none" aria-hidden="true"></div>
 
   <div class="section-container relative z-10">
     <p class="section-label">Skills</p>
     <h2 class="section-heading">Academic & Practical Expertise</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       
-      <!-- Cluster 1: Formal Verification -->
+      <!-- Card 1: Formal Verification -->
       <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.1s both;">
         <div>
           <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
@@ -56,7 +88,7 @@ const languages = [
         </div>
       </div>
 
-      <!-- Cluster 2: Compilers -->
+      <!-- Card 2: Compilers -->
       <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.2s both;">
         <div>
           <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
@@ -78,8 +110,52 @@ const languages = [
         </div>
       </div>
 
-      <!-- Cluster 3: Mathematics -->
+      <!-- Card 3: Algorithms (NEW) -->
       <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.3s both;">
+        <div>
+          <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
+            Algorithms & Data Structures
+          </h3>
+          <ul class="space-y-4">
+            {algoItems.map(item => (
+              <li class="text-sm text-[var(--color-text-secondary)] leading-relaxed flex items-start gap-3">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]/40 flex-shrink-0"></span>
+                <span class="text-xs md:text-sm">
+                  {item.text.split(new RegExp(`(${item.highlights.join('|')})`, 'g')).map(part => 
+                    item.highlights.includes(part) ? <span class="font-mono text-[11px] px-1.5 py-0.5 rounded border border-[var(--color-border)] bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] font-semibold">{part}</span> : part
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 4: Machine Learning (NEW) -->
+      <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.4s both;">
+        <div>
+          <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
+            Applied Machine Learning & NLP
+          </h3>
+          <ul class="space-y-4">
+            {mlItems.map(item => (
+              <li class="text-sm text-[var(--color-text-secondary)] leading-relaxed flex items-start gap-3">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]/40 flex-shrink-0"></span>
+                <span class="text-xs md:text-sm">
+                  {item.text.split(new RegExp(`(${item.highlights.join('|')})`, 'g')).map(part => 
+                    item.highlights.includes(part) ? <span class="font-mono text-[11px] px-1.5 py-0.5 rounded border border-[var(--color-border)] bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] font-semibold">{part}</span> : part
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 5: Mathematical Foundations -->
+      <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.5s both;">
         <div>
           <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
             <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
@@ -100,19 +176,41 @@ const languages = [
         </div>
       </div>
 
-      <!-- Cluster 4: Languages & Tools -->
-      <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.4s both;">
+      <!-- Card 6: Software Engineering (NEW) -->
+      <div class="card flex flex-col justify-between" style="animation: fade-in-up 0.6s ease-out 0.6s both;">
+        <div>
+          <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
+            Software Engineering & Design
+          </h3>
+          <ul class="space-y-4">
+            {sweItems.map(item => (
+              <li class="text-sm text-[var(--color-text-secondary)] leading-relaxed flex items-start gap-3">
+                <span class="mt-2 w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]/40 flex-shrink-0"></span>
+                <span class="text-xs md:text-sm">
+                  {item.text.split(new RegExp(`(${item.highlights.join('|')})`, 'g')).map(part => 
+                    item.highlights.includes(part) ? <span class="font-mono text-[11px] px-1.5 py-0.5 rounded border border-[var(--color-border)] bg-[var(--color-surface-secondary)] text-[var(--color-text-primary)] font-semibold">{part}</span> : part
+                  )}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Card 7: Languages & Tools - Centered Span -->
+      <div class="card flex flex-col justify-between md:col-span-2 lg:col-span-3" style="animation: fade-in-up 0.6s ease-out 0.7s both;">
         <div>
           <h3 class="font-mono text-xs font-bold tracking-widest uppercase text-[var(--color-accent-500)] mb-5 flex items-center gap-2">
             <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
             Languages & Tools
           </h3>
           <p class="text-xs text-[var(--color-text-tertiary)] mb-5 leading-relaxed">
-            Technologies and frameworks utilized across academic compiler construction, verification setups, and operational tasks.
+            Technologies and frameworks utilized across academic compiler construction, verification setups, data analysis, and software modeling.
           </p>
           <div class="flex flex-wrap gap-2.5">
             {languages.map(lang => (
-              <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-secondary)]/50 text-xs font-mono font-bold text-[var(--color-text-primary)] hover:border-[var(--color-accent-500)] hover:bg-[var(--color-surface-card)] hover:shadow-sm hover:scale-[1.03] transition-all duration-200 cursor-default">
+              <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-secondary)]/50 text-xs font-mono font-bold text-[var(--color-text-primary)] hover:border-[var(--color-accent-500)] hover:bg-[var(--color-surface-card)] hover:shadow-sm hover:scale-[1.02] transition-all duration-200 cursor-default">
                 <span class="w-1.5 h-1.5 rounded-full bg-[var(--color-accent-500)]"></span>
                 {lang}
               </span>

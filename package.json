@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "powershell -ExecutionPolicy Bypass -Command \"npm run build; git add .; git commit -m 'Deploy static portfolio'; git push origin main\""
+    "deploy": "git add .; git commit -m 'Deploy static portfolio via Actions'; git push origin main"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.0",
