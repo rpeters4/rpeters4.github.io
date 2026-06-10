@@ -22,26 +22,22 @@ npm run preview
 
 ## Deploy to GitHub Pages
 
-Follow these steps to publish the site at `https://rpeters4.github.io`:
+Follow these steps to publish the site at `https://rpeters4.github.io` directly from your command line:
 
-1. **Build the site.** Ensure your latest static files are compiled into the `/docs` folder:
-   ```bash
-   npm run build
-   ```
-
-2. **Push the build.** Commit your changes (including the updated `/docs` folder) and push to GitHub:
-   ```bash
-   git add .
-   git commit -m "Build portfolio and update static files"
-   git push origin main
-   ```
-
-3. **Configure Pages.** In your repository settings on GitHub, go to **Settings > Pages**.
+1. **Configure Pages (One-time Setup).** 
+   In your repository settings on GitHub, go to **Settings > Pages**.
    * Under **Build and deployment > Source**, select **"Deploy from a branch"**.
-   * Under **Branch**, select `main` and change the folder from `/ (root)` to `/docs`.
+   * Under **Branch**, select `main` and change the folder option from `/ (root)` to `/docs`.
    * Click **Save**.
 
-4. **Visit the site.** Go to `https://rpeters4.github.io`. It may take a couple of minutes to go live. HTTPS is automatic on `github.io`.
+2. **Deploy with a Single Command.** 
+   Run the following terminal command. This script will automatically rebuild your Astro site into `/docs`, stage all changed files, commit them, and push the branch to GitHub:
+   ```bash
+   npm run deploy
+   ```
+
+3. **Visit the site.** 
+   Go to `https://rpeters4.github.io`. It may take a couple of minutes to go live after pushing. HTTPS is automatic on `github.io`.
 
 ## Features
 
